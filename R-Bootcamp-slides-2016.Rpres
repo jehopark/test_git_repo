@@ -1,0 +1,457 @@
+HMC R Bootcamp 2016
+========================================================
+author: Jeho Park
+date: May 26, 2016
+transition: none
+
+HMC R Bootcamp 2016
+
+DAY 1
+
+Reference:
+========================================================
+
+Some (i.e., a lot of) materials are adapted from the following websites:<br>
+* R Bootcamp by Jared Knowles: http://jaredknowles.com/r-bootcamp/<br>
+* R Bootcamp at Berkely: http://statistics.berkeley.edu/computing/r-bootcamp/
+
+Some Housekeeping Stuff
+========================================================
+- **Slides** at http:
+- **Files** at http://bit.ly/hmc-r-workshop-files
+- **Homework assignment submission** at
+
+
+This R bootcamp is...
+========================================================
+* about R's programming aspects.
+  - It's designed to help you start using and coding R.
+* not about Statistics.
+  - I assume that you already have a basic knowledge of Statistics
+* for your summer research and beyond.
+  - The teaching materials are used to help you get up to speed on using R as quickly as possible for your research activites with Prof. Lelia Hawkins and Prof. Rachel Levy
+
+Day 1 Agenda
+========================================================
+* Module 0: Introduction
+  + About this bootcamp
+  + About R
+  + Getting ready (R environment setup)
+* Module 1: The Basics of R
+  + General Stuff
+  + RStudio
+  + R Data Structure (R Objects)
+  + Basic graphics
+  
+Day 1 Agenda (Cont.)
+========================================================
+* Module 2: Working with Data
+  + Raw data (CSV files)
+  + Data import and export
+  + Data cleaning
+  + Subsetting
+  + Dataframes vs Matrices
+  + Attributes and missing values
+  + Graphics (lattice and ggplot2)
+  + Simple graph manipulations
+
+Module 0: Introduction (15 min)
+========================================================
+* Goals and learning objectives
+* What is R?
+* What is not R?
+* Then Why R?
+* Getting ready for R Bootcamp
+
+Bootcamp Goal:
+========================================================
+
+To prepare students to use R to handle and analyze atmospheric sample data.
+
+Learning Objectives:
+========================================================
+_By the end of this two-day bootcamp, you will be able to:_
+* Import data from a simple tab delimited file in R
+* Distinguish the differences between string variable and other R data types
+* Convert different data types back and forth
+* Create a loop using R’s for loop syntax
+* Create an if-else statement in R
+* Interpolate data points and use interpolating functions given
+* Restate the existing R script and explain what each block of the script is for
+* Create basic plots and scale x and y axis according to data points
+* Use subsetting methods
+
+
+What is R?
+========================================================
+* R is a statical programming language/environment.
+* R is open source/free.
+* R is widely used/prefered.
+* R is cross-platform.
+* R is hard to learn (really?).
+
+What is not R?
+========================================================
+* S: R's ancestor
+* S-Plus: Commercial; modern implementation of S
+* SAS: Commercial; widely used in the commercial analytics.  
+* SPSS: Commercial; easy to use; widely used in Social Science.
+* MATLAB: Commercial; can do some Stats. 
+* Python: Also can do some Stats; good in text data manipulation.
+
+Then Why R?
+========================================================
+* __R community is active and constantly growing__
+* R is most popular (other than SPSS and SAS)
+* R has tons of user generated libraries/packages
+* R code is easily shared with others
+* R is constantly improved
+
+
+***
+
+![R listserv help](Rworkshop-slides-figure/r-listserv.png)
+* Source: http://r4stats.com/articles/popularity/
+
+
+Then Why R?
+========================================================
+* R community is active and constantly growing
+* __R is most popular (other than SPSS and SAS)__
+* R has tons of user generated libraries/packages
+* R code is easily shared with others
+* R is constantly improving
+
+***
+
+![R Google Scholar Hit](Rworkshop-slides-figure/fig_2a_scholarlyimpactbig61.png)
+
+Then Why R?
+========================================================
+After SPSS and SAS:<br>
+![R Google Scholar Hit](./Rworkshop-slides-figure/fig_2a_scholarlyimpactlittle6.png)
+
+Then Why R?
+========================================================
+* R community is active and constantly growing
+* R is most popular (other than SPSS and SAS)
+* __R has tons of user generated libraries/packages__
+* R code is easily shared with others
+* R is constantly improved
+
+***
+
+![R Extentions](Rworkshop-slides-figure/r-extensions.png)
+
+Getting Ready!
+========================================================
+* Check R  
+* Check RStudio  
+* Check slides  
+* Check check check...
+
+End of Module 0
+========================================================
+Good job!
+
+Module 1: The Basics of R
+========================================================
+* General stuff
+* Workspace of R and R Studio
+* RStudio
+* R Objects (Vector, List, Data Frame, Factor, Function)
+* Using R: Student t test
+
+Some Gene-R-al Stuff
+========================================================
+```{r, eval=FALSE}
+demo() # display available demos
+
+```{r, eval=FALSE}
+demo(graphics) # try graphics demo
+
+```{r, eval=FALSE}
+library() # show available packages on the computer
+
+```{r, eval=FALSE}
+search() # show loaded packages
+
+```{r, eval=FALSE}
+?hist # search for the usage of hist function
+
+```{r, eval=FALSE}
+??histogram # search for package documents containing the word "histogram"
+```
+
+
+RStudio
+========================================================
+* Integrated Development Environment for R
+* Nice combination of GUI and CLI
+* Free and commercial version
+* 4 main windows, tabs, etc
+* Version control: Git and VPN
+* R Markdown
+* R Presentation
+
+
+What Can We Do with RStudio?
+========================================================
+
+<img src="./Rworkshop-slides-figure/rstudio_image.png" width="900">
+
+Look Ma, R can do Math! 
+========================================================
+```{r, eval=FALSE}
+1+1
+```
+
+```{r, eval=FALSE}
+2+runif(1,0,1)
+```
+
+```{r, eval=FALSE}
+2+runif(1,min=0,max=1)
+```
+
+```{r, eval=FALSE}
+3^2
+```
+
+```{r, eval=FALSE}
+3*3
+```
+
+```{r, eval=FALSE}
+sqrt(3*3) # comments
+```
+
+```{r}
+# comments are preceded by hash sign
+```
+
+Even More Math! 
+========================================================
+* R can take integrals and derivatives, for example:
+
+Numerical Integral of
+
+$\displaystyle\int_0^{\infty} \frac{1}{(x+1)\sqrt{x}}dx$ 
+
+```{r}
+integrand <- function(x) {1/((x+1)*sqrt(x))} ## define the integrated function
+```
+```{r}
+integrate(integrand, lower=0, upper=Inf) ## integrate the function from 0 to infinity
+```
+
+
+
+Workspace of R
+========================================================
+
+R workspace stores objects like vecors, datasets and functions in memory (the available space for calculation is limited to the size of the RAM).
+
+```{r}
+a <- 5 # notice a in your Environment window
+```
+
+```{r}
+A <- "text" 
+```
+
+```{r, eval=FALSE}
+a
+A
+ls()
+print(c(a,A))
+print(a, A)
+```
+
+R Objects: Vector
+========================================================
+A vector is an array object of the __same type__ data elements.
+
+```{r, eval=FALSE}
+class(a)
+```{r, eval=FALSE}
+class(A)
+```{r, eval=FALSE}
+B <- c(a,A) # concatenation
+```{r, eval=FALSE}
+print(B)
+```{r, eval=FALSE}
+class(B) # why?
+```
+
+R Objects: Vector (cont.)
+========================================================
+R has five basic or “atomic” classes of objects: 
+* character
+* numeric (real numbers) 
+* integer
+* complex
+* logical (True/False)
+
+A vector contains a set of data in any one of the atomic classes.
+
+R Objects: List
+========================================================
+A list is an object that can store __different types__ of vectors. 
+```{r, eval=FALSE}
+aList <- list(name=c("Joseph"), married=T, kids=2)
+aList
+aList$kids <- aList$kids+1
+aList$kids
+aList2 <- list(numeric_data=a,character_data=A)
+aList2
+allList <- list(aList, aList2)
+allList
+```
+
+R Objects: Data frame
+========================================================
+A data frame is used for storing data tables. It is a __list of vectors of equal length__. 
+```{r, eval=FALSE}
+n <- c(2, 3, 5) # a vector 
+s <- c("aa", "bb", "cc") # a vector
+b <- c(TRUE, FALSE, TRUE) # a vector
+df <- data.frame(n, s, b) # a data frame
+df
+mtcars # a built-in (attached) data frame
+mtcars$mpg
+```
+
+R Objects: Data frame (cont.)
+========================================================
+```{r, eval=FALSE}
+myFrame <- data.frame(y1=rnorm(100),y2=rnorm(100), y3=rnorm(100))
+head(myFrame) # display first few lines of data
+names(myFrame) # display column names
+summary(myFrame) # output depends on the data types
+plot(myFrame)
+myFrame2 <- read.table(file="http://scicomp.hmc.edu/data/R/Rtest.txt", header=T, sep=",")
+myFrame2
+```
+
+Subsseting
+=========================
+Operators that can be used to extract subsets of R objects.
+* [ always returns an object of the same class as the original; can be used to select more than one element.
+* [[ is used to extract elements of a list or a data frame; it can only be used to extract a single element.
+* $ is used to extract elements of a list or data frame by name.
+
+Subsetting (cont.)
+==========================
+```{r, eval=FALSE}
+x <- c("a", "b", "c", "c", "d", "a")
+x[1]
+x[1:4]
+x[x > "a"] 
+u <- x > "a" # what's u here?
+u
+x[u] # subsetting using a boolean vector
+y <- list(foo=x, bar=x[u])
+y
+y[[1]]
+y$bar
+```
+R Objects: Factor
+========================================================
+* Factors are a special compoud object used to represent __categorical data__ such as gender, social class, etc.
+* Factors have 'levels' attribute. They may be nominal or ordered.
+```{r, eval=FALSE}
+v <- c("a","b","c","c","b")
+x <- factor(v) # turn the character vector into a factor object
+z <- factor(v, ordered = TRUE) # ordered factor
+x
+z
+table(x)
+```
+
+R Objects: Function
+=============================
+```{r, eval=FALSE}
+fun <- function(a,b) {
+  a*b
+}
+
+fun   
+fun(2,3) # a function call
+```
+
+Using R for Statistical Tests
+========================================================
+Student t-Tests
+
+* One of the most common tests in statistics
+* Used to determine whether the means of two groups are equal to each other
+* Assumption for the test: both groups are sampled from normal distributions with equal variances.
+* Null hypothesis: The two means are equal.
+
+Using R for Statistical Tests
+========================================================
+Student t-Tests (cont.)
+
+```{r, eval=F}
+x <- rnorm(10)
+y <- rnorm(10)
+t.test(x,y)
+```
+
+Using R for Statistical Tests (cont.)
+========================================================
+One Sample t Test
+
+We are taught the average (normal) human temperature is 98.6 degrees Fahrenheit.
+Let's test it using the data set from a study:
+Mackowiak, P. A., Wasserman, S. S., and Levine, M. M. (1992). A Critical Appraisal of 98.6 Degrees F, the Upper Limit of the Normal Body Temperature, and Other Legacies of Carl Reinhold August Wunderlich. Journal of the American Medical Association, 268, 1578-1580.
+
+
+Using R for Statistical Tests (cont.)
+========================================================
+One Sample t Test (cont.)
+
+Open the text file from 
+```{r, eval=F}
+data <- read.table(file="http://scicomp.hmc.edu/data/R/normtemp.txt", header=T)
+names(data)
+attach(data)
+summary(Temp) 
+# Graphical test for normality
+qqnorm(Temp)
+qqline(Temp)
+plot(density(Temp))
+# Non-graphical test for normality
+shapiro.test(Temp) # Shapiro-Wilk normality test
+
+```
+
+# shapiro.test(runif(100, min = 2, max = 4)) # the lower the p-value, the smaller the chance that the samples are from normal distribution.
+# The sample seems okay to test one sample t test
+
+Using R for Statistical Tests (cont.)
+========================================================
+One Sample t Test (last page)
+
+```{r, eval=F}
+t.test(Temp, mu=98.6)
+```
+The null-hypothesis of this test is that the population's mean value is 98.6. Thus if the p-value is less than the chosen alpha level (e.g., p < 0.05), then the null hypothesis is rejected. We can now reject the null hypothesis. 
+
+From the sample, we might estimate the mean human body temperature to be 98.25 degrees 
+
+That's it!
+========================================================
+
+Please submit your R environemnt file at http://bit.ly/hmc-r-workshop-homework-f2015 (a digital badge requirement).
+
+> Useful links:
+> 
+> - R tutorial site: http://jaredknowles.com/r-bootcamp/ and
+> - R search site: http://rseek.org
+> - R cheat sheets: http://devcheatsheet.com/tag/r/
+> - R Markdown cheat sheet: http://shiny.rstudio.com/articles/rm-cheatsheet.html
+
+
+
