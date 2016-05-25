@@ -4,21 +4,6 @@
 ## Updated: May 25, 2016
 ## Github URL: https://github.com/jehopark/hmc-r-bootcamp-2016.git
 
-#Look Ma, R can do Math!  ---------
-1+1
-2+runif(1,0,1)
-2+runif(1,min=0,max=1)
-3^2
-3*3
-sqrt(3*3) # comments
-# comments are preceded by hash sign
-
-# Even More Math! 
-
-integrand <- function(x) {1/((x+1)*sqrt(x))} ## define the integrated function
-integrate(integrand, lower=0, upper=Inf) ## integrate the function from 0 to infinity
-
-
 # Some General Stuff -----------
 demo() # display available demos
 demo(graphics) # try graphics demo
@@ -34,7 +19,23 @@ a
 A
 ls()
 print(c(a,A))
-print(a,A)
+
+#Look Ma, R can do Math!  ---------
+1+1
+2+runif(1,0,1)
+2+runif(1,min=0,max=1)
+3^2
+3*3
+sqrt(3*3) # comments
+# comments are preceded by hash sign
+
+# Even More Math! 
+
+integrand <- function(x) {1/((x+1)*sqrt(x))} ## define the integrated function
+integrate(integrand, lower=0, upper=Inf) ## integrate the function from 0 to infinity
+
+
+
 
 # Vector -----------
 # A vector is an array object of the same type data elements.
