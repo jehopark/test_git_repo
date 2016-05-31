@@ -152,17 +152,32 @@ Getting Ready!
 
 End of Module 0
 ========================================================
-Good job!
+Yay! Good job guys!
 
 Module 1: The Basics of R
 ========================================================
+* RStudio and its functionality
 * General stuff
-* Workspace of R and R Studio
-* RStudio
-* R Objects (Vector, List, Data Frame, Factor, Function)
-* Using R: Student t test
+* Workspace of R and some calculations
+* R Objects (Vectors, Lists, Dataframes, Factors, and Functions)
+* Basic Graphics
 
-Some Gene-R-al Stuff
+RStudio
+========================================================
+* Integrated Development Environment for R
+* Nice combination of GUI and CLI
+* Free and commercial version
+* 4 main windows, tabs, etc
+* Version control: Git and VPN
+* R Markdown
+* R Presentation
+
+RStudio (Cont.)
+========================================================
+
+<img src="./Rworkshop-slides-figure/rstudio_image.png" width="900">
+
+General Stuff
 ========================================================
 ```{r, eval=FALSE}
 demo() # display available demos
@@ -184,21 +199,26 @@ search() # show loaded packages
 ```
 
 
-RStudio
-========================================================
-* Integrated Development Environment for R
-* Nice combination of GUI and CLI
-* Free and commercial version
-* 4 main windows, tabs, etc
-* Version control: Git and VPN
-* R Markdown
-* R Presentation
-
-
-What Can We Do with RStudio?
+Workspace of R
 ========================================================
 
-<img src="./Rworkshop-slides-figure/rstudio_image.png" width="900">
+R workspace stores objects like vecors, datasets and functions in memory (the available space for calculation is limited to the size of the RAM).
+
+```{r}
+a <- 5 # notice a in your Environment window
+```
+
+```{r}
+A <- "text" 
+```
+
+```{r, eval=FALSE}
+a
+A
+ls()
+print(c(a,A))
+print(a, A)
+```
 
 Look Ma, R can do Math! 
 ========================================================
@@ -247,44 +267,26 @@ integrate(integrand, lower=0, upper=Inf) ## integrate the function from 0 to inf
 
 
 
-Workspace of R
+
+R Objects: Vectors
 ========================================================
-
-R workspace stores objects like vecors, datasets and functions in memory (the available space for calculation is limited to the size of the RAM).
-
-```{r}
-a <- 5 # notice a in your Environment window
-```
-
-```{r}
-A <- "text" 
-```
-
-```{r, eval=FALSE}
-a
-A
-ls()
-print(c(a,A))
-print(a, A)
-```
-
-R Objects: Vector
-========================================================
-A vector is an array object of the __same type__ data elements.
+The most basic form of an R object.  
+Scalar values are __vectors of length one__.  
+A vector is an array object of the __same type__ (homogeneous) data elements.
 
 ```{r, eval=FALSE}
 class(a)
 ```{r, eval=FALSE}
 class(A)
 ```{r, eval=FALSE}
-B <- c(a,A) # concatenation
+B <- c(a,A) # concatenation function
 ```{r, eval=FALSE}
-print(B)
+B # see the values
 ```{r, eval=FALSE}
-class(B) # why?
+class(B) # why characters?
 ```
 
-R Objects: Vector (cont.)
+R Objects: Vectors (cont.)
 ========================================================
 R has five basic or “atomic” classes of objects: 
 * character
@@ -295,7 +297,19 @@ R has five basic or “atomic” classes of objects:
 
 A vector contains a set of data in any one of the atomic classes.
 
-R Objects: List
+
+R Objects: Matrices
+========================================================
+A matrix is a two-dimensional rectangular object of the __same type__ (homogeneous) data elements. 
+
+```{r, eval=FALSE}
+mat <- matrix(rnorm(6), nrow = 3, ncol = 2) 
+mat # a matrix
+dim(mat) # dimension
+t(mat) 
+```
+
+R Objects: Lists
 ========================================================
 A list is an object that can store __different types__ of vectors. 
 ```{r, eval=FALSE}
@@ -309,20 +323,21 @@ allList <- list(aList, aList2)
 allList
 ```
 
-R Objects: Data frame
+R Objects: Data frames
 ========================================================
-A data frame is used for storing data tables. It is a __list of vectors of equal length__. 
+A data frame is a __list of vectors of equal length__ with possibly different types. It is used for storing retengular data tables.
 ```{r, eval=FALSE}
 n <- c(2, 3, 5) # a vector 
 s <- c("aa", "bb", "cc") # a vector
 b <- c(TRUE, FALSE, TRUE) # a vector
 df <- data.frame(n, s, b) # a data frame
 df
+class(df$s) # was a string vector but now a factor. 
 mtcars # a built-in (attached) data frame
 mtcars$mpg
 ```
 
-R Objects: Data frame (cont.)
+R Objects: Data frames (cont.)
 ========================================================
 ```{r, eval=FALSE}
 myFrame <- data.frame(y1=rnorm(100),y2=rnorm(100), y3=rnorm(100))
@@ -332,6 +347,30 @@ summary(myFrame) # output depends on the data types
 plot(myFrame)
 myFrame2 <- read.table(file="http://scicomp.hmc.edu/data/R/Rtest.txt", header=T, sep=",")
 myFrame2
+```
+
+R Objects: Factors
+========================================================
+* Factors are a special compoud object used to represent __categorical data__ such as gender, social class, etc.
+* Factors have 'levels' attribute. They may be nominal or ordered.
+```{r, eval=FALSE}
+v <- c("a","b","c","c","b")
+x <- factor(v) # turn the character vector into a factor object
+z <- factor(v, ordered = TRUE) # ordered factor
+x
+z
+table(x)
+```
+
+R Objects: Functions
+=============================
+```{r, eval=FALSE}
+fun <- function(a,b) {
+  a*b
+}
+
+fun   
+fun(2,3) # a function call
 ```
 
 Subsseting
@@ -356,29 +395,7 @@ y
 y[[1]]
 y$bar
 ```
-R Objects: Factor
-========================================================
-* Factors are a special compoud object used to represent __categorical data__ such as gender, social class, etc.
-* Factors have 'levels' attribute. They may be nominal or ordered.
-```{r, eval=FALSE}
-v <- c("a","b","c","c","b")
-x <- factor(v) # turn the character vector into a factor object
-z <- factor(v, ordered = TRUE) # ordered factor
-x
-z
-table(x)
-```
 
-R Objects: Function
-=============================
-```{r, eval=FALSE}
-fun <- function(a,b) {
-  a*b
-}
-
-fun   
-fun(2,3) # a function call
-```
 
 Using R for Statistical Tests
 ========================================================
