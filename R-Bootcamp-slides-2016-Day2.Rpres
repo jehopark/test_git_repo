@@ -1,0 +1,64 @@
+HMC R Bootcamp 2016
+========================================================
+author: Jeho Park
+date: June 1, 2016
+transition: none
+
+HMC R Bootcamp 2016
+
+DAY 2
+
+
+
+Module 2: Working with data (Part 2)
+===========================
+* Graphics (base graphics)
+* Manipulating graphs
+
+Graphics (base graphics)
+=============================
+* Creating a graph
+```{r, eval=FALSE}
+attach(mtcars) # Attach mtcars to search path
+plot(wt, mpg) # notice objects are called by their names, not mtcars$wt
+plot(wt, mpg, 
+     main = "Regression of MPG on Weight",
+     xlab = "Weight", 
+     ylab = "MPG")
+plot(wt, mpg, ann = FALSE)
+```
+* Changing/adding the details afterwards
+```{r, eval=FALSE}
+abline(h=25) # a reference line
+abline(lm(mpg~wt)) # look at the arguments
+title(main = "Regression of MPG on Weight", xlab = "Weight", ylab = "MPG")
+
+```
+ 
+Manipulating graphs
+=============================
+* par() customizes many features of graphs such as fonts, colors, axes, and titles
+* par(optionname=value, optionname=value, ...)
+```{r, eval=FALSE}
+par()              # view current settings
+orig_par <- par()  # save current settings
+par(col.lab="red") # red x and y labels 
+plot(wt, mpg)      # create a plot with these new settings 
+par(orig_par)      # restore original settings
+plot(wt, mpg)
+plot(wt, mpg, col.lab="red") # change settings withing plot()
+```
+```{r, eval=FALSE}
+?par # see all the options
+```
+
+Wrap-up exercise
+============================
+May use a smaller version of the hflights dataset, e.g., hflightsSub <- hflights[sample(1:nrow(hflights), 10000, replace = FALSE), ]  
+
+__Basics__  
+1) Plot a histogram of the flight delays with negative delays set to zero, censoring delay times at a maximum of 60 minutes.  
+2) Plot the arrival delay against the departure delay as a scatterplot. And give it a main title and axis labels.  
+3) Output it as a PDF and see if you'd be comfortable with including it in a report/paper.  
+4) Make a boxplot of the departure delay as a function of the day of week.  
+
