@@ -2,7 +2,7 @@
 ## Owner: Jeho Park
 ## Created: May 2016 (adapted from CIS R Workshop)
 ## Updated: June 1, 2016
-## Github URL: https://github.com/jehopark/hmc-r-bootcamp-2016.git
+## Github URL: https://github.com/cisathmc/hmc-r-bootcamp-2016.git
 
 # Some General Stuff ----
 demo() # display available demos
@@ -219,7 +219,7 @@ for(i in 1:10) {
   print(i)
 }
 
-* While loops
+# While loops
 i <- 0
 while(i < 5) {
   i <- i + 1 
