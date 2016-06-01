@@ -1,7 +1,7 @@
 ## HMC R Bootcamp 2016
 ## Owner: Jeho Park
 ## Created: May 2016 (adapted from CIS R Workshop)
-## Updated: May 25, 2016
+## Updated: June 1, 2016
 ## Github URL: https://github.com/jehopark/hmc-r-bootcamp-2016.git
 
 # Some General Stuff ----
@@ -158,13 +158,21 @@ d = as.data.frame(m)
 object.size(m) # 1600200 bytes
 object.size(d) # 22400568 bytes
 
-## Creating a graph ----
-attach(mtcars)
-plot(wt, mpg) 
-abline(lm(mpg~wt))
-title("Regression of MPG on Weight")
+## Module 2: Working with data (Part 2) ----
+attach(mtcars) # Attach mtcars to search path
+plot(wt, mpg) # notice objects are called by their names, not mtcars$wt
+plot(wt, mpg, 
+     main = "Regression of MPG on Weight",
+     xlab = "Weight", 
+     ylab = "MPG")
+plot(wt, mpg, ann = FALSE) 
 
-## Manipulation graphs ----
+# Changing/adding the details afterwards
+abline(h=25) # a reference line
+abline(lm(mpg~wt)) # look at the argument, what's lm?
+title(main = "Regression of MPG on Weight", xlab = "Weight", ylab = "MPG")
+
+## Manipulating graphs (base package) ----
 par()              # view current settings
 orig_par <- par()  # save current settings
 par(col.lab="red") # red x and y labels 
@@ -172,3 +180,101 @@ plot(wt, mpg)      # create a plot with these new settings
 par(orig_par)      # restore original settings
 plot(wt, mpg)
 plot(wt, mpg, col.lab="red") # change settings withing plot()
+?par # see all the options
+
+## Managing R Project ----
+save.image("r-bootcamp.Rdata") # save workspace  
+rm(list=ls()) # remove all objects
+load("r-bootcamp.Rdata") # bring the workspace back
+save.image() # by default it saves workspace to .Rdata 
+
+curr_wd <- getwd() # returns absolute path to the working directory
+setwd("data") # change working directory to data folder
+setwd(file.path('~', 'Desktop'))
+
+## Managing R Project (cont.) ----
+require("datasets") # load/attach datasets
+ls('package:datasets') 
+airmiles # airmiles object in datasets package
+airmiles <- 0 # Oops! overwritten?
+datasets::airmiles # package namespace
+rm(airmiles) # removes user defined object airmiles
+
+## Module 4: Programming in R ----
+
+mult_fun <- function(a = 1, b = 1) {
+return(a*b)
+}
+
+mult_fun  # show the function's code
+mult_fun(2,3) # function call
+mult_fun() # would this be an error?
+
+x <- 10; y <- 20
+x + y
+`+`(x, y)
+
+## Loops ----
+for(i in 1:10) {
+  print(i)
+}
+
+* While loops
+i <- 0
+while(i < 5) {
+  i <- i + 1 
+  print(i)
+}
+
+
+## Vectorization ----
+########## a bad loop, with 'growing' data
+set.seed(42);
+m=1000; n=1000;
+mymat <- replicate(m, rnorm(n)) # create matrix of normal random numbers
+system.time(
+  for (i in 1:m) {
+    for (j in 1:n) {
+      mymat[i,j] <- mymat[i,j] + 10*sin(0.75*pi)
+    }
+  }
+)
+
+set.seed(42);
+m=1000; n=1000;
+mymat1 <- replicate(m, rnorm(n))
+system.time(
+  mymat1 <- mymat1 + 10*sin(0.75*pi)
+)
+
+## If-else statement ----
+a <- 0
+if (a > 0) {
+  # do this when condition1 == TRUE
+  print("a is less than 0")
+} else if (a < 0) {
+  # do this when condition2 == TRUE
+  print("a is less than 0")
+} else {
+  print("a is 0")
+}
+
+
+## Debugging R Code ----
+
+## Good Coding Styles ----
+average <- mean(feet / 12 + inches, na.rm = TRUE)
+average<-mean(feet/12+inches,na.rm=TRUE)
+
+if (y < 0 && debug) {
+  message("Y is negative")
+} else {
+  message("Y is not negative")
+}
+
+## Wrap-up Exercise ---- 
+# 1) Write an R function that will take an input vector and set any negative values in the vector to zero.  
+# 2) Write an R function that will take an input vector and set any value below a threshold to be the value of threshold. Optionally, the function should instead set values above a threshold to the value of the threshold.  
+# 3) Augment your function so that it checks that the input is a numeric vector and return an error if not. (See the help information for stop().)  
+
+
