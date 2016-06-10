@@ -203,7 +203,7 @@ rm(airmiles) # removes user defined object airmiles
 ## Module 4: Programming in R ----
 
 mult_fun <- function(a = 1, b = 1) {
-return(a*b)
+  return(a*b)
 }
 
 mult_fun  # show the function's code
